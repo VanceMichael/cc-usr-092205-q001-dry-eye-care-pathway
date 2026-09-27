@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "干眼连续照护端到端样例",
+  "type": "object",
+  "required": ["domain", "kind", "today", "identities", "timelines"],
+  "properties": {
+    "domain": {"const": "dry-eye-care-pathway"},
+    "kind": {"const": "care-scenario"},
+    "description": {"type": "string"},
+    "today": {"type": "string", "format": "date"},
+    "identities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["person_key", "organization", "local_id", "name", "birth_date", "gender"],
+        "properties": {
+          "person_key": {"type": "string"},
+          "organization": {"type": "string"},
+          "local_id": {"type": "string"},
+          "id_token": {"type": "string"},
+          "name": {"type": "string"},
+          "birth_date": {"type": "string", "format": "date"},
+          "gender": {"type": "string"},
+          "phone": {"type": "string"},
+          "established": {"type": "string", "format": "date"},
+          "expect": {"type": "string"},
+          "confirm_with_token": {"type": "string"},
+          "confirm_on": {"type": "string", "format": "date"}
+        }
+      }
+    },
+    "consents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["person_key", "scope", "grantee", "granted_on", "purpose"],
+        "properties": {
+          "person_key": {"type": "string"},
+          "scope": {"enum": ["record:view", "record:transfer", "population:risk"]},
+          "grantee": {"type": "string"},
+          "granted_on": {"type": "string", "format": "date"},
+          "purpose": {"type": "string"}
+        }
+      }
+    },
+    "timelines": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["date", "event_type", "actor"],
+          "properties": {
+            "date": {"type": "string", "format": "date"},
+            "event_type": {
+              "enum": [
+                "screening_questionnaire",
+                "work_environment",
+                "blink_habits",
+                "medical_history",
+                "long_term_medication",
+                "tear_film_exam",
+                "doctor_assessment",
+                "patient_update",
+                "medication_change",
+                "surgery_intention",
+                "lifestyle_advice",
+                "follow_up",
+                "referral",
+                "note"
+              ]
+            },
+            "actor": {"type": "string"},
+            "source": {"type": "string"},
+            "payload": {"type": "object"},
+            "note": {"type": "string"}
+          }
+        }
+      }
+    },
+    "employer_cohort": {
+      "type": "object",
+      "required": ["as_of", "level_counts"],
+      "properties": {
+        "as_of": {"type": "string", "format": "date"},
+        "organization": {"type": "string"},
+        "level_counts": {
+          "type": "object",
+          "properties": {
+            "lifestyle": {"type": "integer", "minimum": 0},
+            "review": {"type": "integer", "minimum": 0},
+            "medical": {"type": "integer", "minimum": 0},
+            "urgent": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

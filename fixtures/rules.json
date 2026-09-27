@@ -1,0 +1,185 @@
+{
+  "domain": "dry-eye-care-pathway",
+  "kind": "risk-rule-sets",
+  "rule_sets": [
+    {
+      "version": 1,
+      "name": "干眼风险分层规则 v1",
+      "effective_from": "2025-01-01",
+      "effective_to": "2026-08-31",
+      "levels": ["lifestyle", "review", "medical", "urgent"],
+      "rules": [
+        {
+          "id": "v1-U",
+          "name": "紧急就医",
+          "level": "urgent",
+          "any": [
+            {"key": "doctor_corneal_risk", "op": "==", "value": true, "label": "医生判断存在角膜损伤或感染风险"},
+            {"key": "corneal_staining_grade", "op": ">=", "value": 2, "label": "角膜荧光素染色≥2级"},
+            {"key": "schirmer_mm", "op": "<=", "value": 2, "label": "Schirmer I≤2mm/5min，泪液严重缺乏"},
+            {"all": [
+              {"key": "redness_or_pain", "op": "==", "value": true, "label": "眼红或明显眼痛"},
+              {"key": "photophobia", "op": "==", "value": true, "label": "畏光"}
+            ]},
+            {"key": "steroid_drops_without_prescription", "op": "==", "value": true, "label": "自行使用含激素眼药水，存在升高眼压与掩盖感染风险"}
+          ]
+        },
+        {
+          "id": "v1-M",
+          "name": "眼科就医",
+          "level": "medical",
+          "any": [
+            {"key": "doctor_inflammation", "op": "==", "value": true, "label": "医生判断存在中重度炎症（如MGD/睑缘炎）"},
+            {"key": "corneal_staining_grade", "op": ">=", "value": 1, "label": "角膜荧光素染色阳性"},
+            {"key": "but_seconds", "op": "<=", "value": 5, "label": "泪膜破裂时间≤5秒"},
+            {"key": "schirmer_mm", "op": "<=", "value": 5, "label": "Schirmer I≤5mm/5min"},
+            {"key": "osdi", "op": ">=", "value": 33, "label": "OSDI≥33，中重度症状"},
+            {"key": "symptom_duration_days", "op": ">=", "value": 14, "label": "异物感/干涩等症状持续≥14天"},
+            {"all": [
+              {"key": "systemic_risk_disease", "op": "==", "value": true, "label": "合并干燥综合征、糖尿病等全身相关疾病"},
+              {"key": "osdi", "op": ">=", "value": 13, "label": "OSDI≥13"}
+            ]},
+            {"all": [
+              {"key": "systemic_risk_medication", "op": "==", "value": true, "label": "长期使用抗组胺/抗抑郁/异维A酸等可能影响泪液的药物"},
+              {"key": "symptom_duration_days", "op": ">=", "value": 14, "label": "症状持续≥14天"}
+            ]}
+          ]
+        },
+        {
+          "id": "v1-R",
+          "name": "安排复查",
+          "level": "review",
+          "any": [
+            {"key": "osdi", "op": ">=", "value": 13, "label": "OSDI≥13，症状超出正常范围"},
+            {"key": "but_seconds", "op": "<=", "value": 10, "label": "泪膜破裂时间≤10秒"},
+            {"key": "conjunctival_staining_grade", "op": ">=", "value": 1, "label": "结膜染色阳性"},
+            {"key": "screen_hours", "op": ">=", "value": 8, "label": "每日盯屏≥8小时"},
+            {"key": "vision_fluctuation", "op": "==", "value": true, "label": "视力波动"},
+            {"key": "contact_lens_discomfort", "op": "==", "value": true, "label": "佩戴隐形眼镜不适"},
+            {"key": "self_medication", "op": "==", "value": true, "label": "自行换用眼药水"},
+            {"key": "vasoconstrictor_drops", "op": "==", "value": true, "label": "使用去红血丝类缩血管眼药水"},
+            {"key": "planning_refractive_surgery", "op": "==", "value": true, "label": "计划进行近视手术，需术前基线评估"}
+          ]
+        }
+      ],
+      "actions": {
+        "urgent": [
+          "24-72小时内至眼科急诊或专科门诊，必要时当天就诊",
+          "立即停止自行购买的一切眼药水，尤其含激素或缩血管成分者，就诊时携带药瓶",
+          "暂停佩戴隐形眼镜，避免继续盯屏加重暴露",
+          "不要自行加量或更换人工泪液，按急诊医嘱处理"
+        ],
+        "medical": [
+          "1周内转诊眼科门诊，完善泪膜与眼表评估",
+          "停止凭经验自行滴药，按医嘱使用无防腐剂人工泪液或处方治疗",
+          "记录症状变化与用药清单，复诊时带给医生"
+        ],
+        "review": [
+          "2-4周内复查问卷与泪膜破裂时间等客观指标",
+          "停用去红血丝类缩血管眼药水，避免长期使用含防腐剂产品",
+          "落实20-20-20间歇休息、主动眨眼与屏幕摆放",
+          "如计划近视手术，术前完成泪膜基线评估"
+        ],
+        "lifestyle": [
+          "坚持20-20-20用眼休息与有意识完整眨眼",
+          "保持环境湿度、避免空调风口直吹，屏幕上缘低于视线",
+          "持续用眼后可使用无防腐剂人工泪液，无需特殊用药",
+          "6-12个月随企业筛查或门诊常规复查"
+        ]
+      }
+    },
+    {
+      "version": 2,
+      "name": "干眼风险分层规则 v2",
+      "effective_from": "2026-09-01",
+      "effective_to": null,
+      "levels": ["lifestyle", "review", "medical", "urgent"],
+      "changes_from_v1": [
+        "缩血管眼药水自助使用由复查级升级为就医级（反跳性充血证据）",
+        "近视手术计划由复查建议升级为就医级术前眼表评估",
+        "盯屏暴露阈值由每日8小时下调至6小时",
+        "Schirmer 与泪膜破裂时间的就医阈值放宽，以及早干预"
+      ],
+      "rules": [
+        {
+          "id": "v2-U",
+          "name": "紧急就医",
+          "level": "urgent",
+          "any": [
+            {"key": "doctor_corneal_risk", "op": "==", "value": true, "label": "医生判断存在角膜损伤或感染风险"},
+            {"key": "corneal_staining_grade", "op": ">=", "value": 2, "label": "角膜荧光素染色≥2级"},
+            {"key": "schirmer_mm", "op": "<=", "value": 2, "label": "Schirmer I≤2mm/5min，泪液严重缺乏"},
+            {"all": [
+              {"key": "redness_or_pain", "op": "==", "value": true, "label": "眼红或明显眼痛"},
+              {"key": "photophobia", "op": "==", "value": true, "label": "畏光"}
+            ]},
+            {"key": "steroid_drops_without_prescription", "op": "==", "value": true, "label": "自行使用含激素眼药水，存在升高眼压与掩盖感染风险"}
+          ]
+        },
+        {
+          "id": "v2-M",
+          "name": "眼科就医",
+          "level": "medical",
+          "any": [
+            {"key": "doctor_inflammation", "op": "==", "value": true, "label": "医生判断存在中重度炎症（如MGD/睑缘炎）"},
+            {"key": "corneal_staining_grade", "op": ">=", "value": 1, "label": "角膜荧光素染色阳性"},
+            {"key": "but_seconds", "op": "<=", "value": 6, "label": "泪膜破裂时间≤6秒"},
+            {"key": "schirmer_mm", "op": "<=", "value": 7, "label": "Schirmer I≤7mm/5min"},
+            {"key": "osdi", "op": ">=", "value": 33, "label": "OSDI≥33，中重度症状"},
+            {"key": "symptom_duration_days", "op": ">=", "value": 14, "label": "异物感/干涩等症状持续≥14天"},
+            {"key": "vasoconstrictor_drops", "op": "==", "value": true, "label": "使用去红血丝类缩血管眼药水（v2升级：反跳性充血需医生评估）"},
+            {"key": "planning_refractive_surgery", "op": "==", "value": true, "label": "计划近视手术（v2升级：须眼科术前眼表评估）"},
+            {"all": [
+              {"key": "systemic_risk_disease", "op": "==", "value": true, "label": "合并干燥综合征、糖尿病等全身相关疾病"},
+              {"key": "osdi", "op": ">=", "value": 13, "label": "OSDI≥13"}
+            ]},
+            {"all": [
+              {"key": "systemic_risk_medication", "op": "==", "value": true, "label": "长期使用抗组胺/抗抑郁/异维A酸等可能影响泪液的药物"},
+              {"key": "symptom_duration_days", "op": ">=", "value": 14, "label": "症状持续≥14天"}
+            ]}
+          ]
+        },
+        {
+          "id": "v2-R",
+          "name": "安排复查",
+          "level": "review",
+          "any": [
+            {"key": "osdi", "op": ">=", "value": 13, "label": "OSDI≥13，症状超出正常范围"},
+            {"key": "but_seconds", "op": "<=", "value": 10, "label": "泪膜破裂时间≤10秒"},
+            {"key": "conjunctival_staining_grade", "op": ">=", "value": 1, "label": "结膜染色阳性"},
+            {"key": "screen_hours", "op": ">=", "value": 6, "label": "每日盯屏≥6小时（v2下调阈值）"},
+            {"key": "vision_fluctuation", "op": "==", "value": true, "label": "视力波动"},
+            {"key": "contact_lens_discomfort", "op": "==", "value": true, "label": "佩戴隐形眼镜不适"},
+            {"key": "self_medication", "op": "==", "value": true, "label": "自行换用眼药水"}
+          ]
+        }
+      ],
+      "actions": {
+        "urgent": [
+          "24-72小时内至眼科急诊或专科门诊，必要时当天就诊",
+          "立即停止自行购买的一切眼药水，尤其含激素或缩血管成分者，就诊时携带药瓶",
+          "暂停佩戴隐形眼镜，避免继续盯屏加重暴露",
+          "不要自行加量或更换人工泪液，按急诊医嘱处理"
+        ],
+        "medical": [
+          "1周内转诊眼科门诊，完善泪膜与眼表评估",
+          "停止凭经验自行滴药，按医嘱使用无防腐剂人工泪液或处方治疗；缩血管眼药水须在医生指导下停用，防反跳",
+          "计划近视手术者先完成术前眼表与泪膜评估，再安排手术日程",
+          "记录症状变化与用药清单，复诊时带给医生"
+        ],
+        "review": [
+          "2-4周内复查问卷与泪膜破裂时间等客观指标",
+          "避免长期使用含防腐剂人工泪液，不建议自行使用去红血丝类眼药水",
+          "落实20-20-20间歇休息、主动眨眼与屏幕摆放",
+          "每日盯屏≥6小时者增加工间用眼休息频次"
+        ],
+        "lifestyle": [
+          "坚持20-20-20用眼休息与有意识完整眨眼",
+          "保持环境湿度、避免空调风口直吹，屏幕上缘低于视线",
+          "持续用眼后可使用无防腐剂人工泪液，无需特殊用药",
+          "6-12个月随企业筛查或门诊常规复查"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "domain": "dry-eye-care-pathway",
+  "kind": "care-scenario",
+  "description": "合成数据，不含真实个人信息。演示企业筛查到医院的连续照护、版本化分层、只追加病程、身份合并、授权访问与雇主群体视图。",
+  "today": "2026-09-25",
+  "identities": [
+    {
+      "person_key": "wanglei",
+      "organization": "企业职业健康中心",
+      "local_id": "OCC-2026-0317",
+      "id_token": "TOKEN-WL-0001",
+      "name": "王磊",
+      "birth_date": "1992-05-14",
+      "gender": "男",
+      "phone": "138-0000-1024",
+      "established": "2026-03-08"
+    },
+    {
+      "person_key": "wanglei",
+      "organization": "市眼科医院",
+      "local_id": "EH-2026-1102",
+      "id_token": "TOKEN-WL-0001",
+      "name": "王磊",
+      "birth_date": "1992-05-14",
+      "gender": "男",
+      "phone": "138-0000-1024",
+      "established": "2026-04-08"
+    },
+    {
+      "person_key": "chenjing",
+      "organization": "企业职业健康中心",
+      "local_id": "OCC-2026-0402",
+      "id_token": "TOKEN-CJ-0009",
+      "name": "陈静",
+      "birth_date": "1988-11-02",
+      "gender": "女",
+      "phone": "139-0000-2048",
+      "established": "2026-03-09"
+    },
+    {
+      "person_key": "chenjing",
+      "organization": "市眼科医院",
+      "local_id": "EH-2026-1260",
+      "id_token": "",
+      "name": "陈静",
+      "birth_date": "1988-11-02",
+      "gender": "女",
+      "phone": "139 0000 2048",
+      "established": "2026-05-12",
+      "expect": "pending_demographic",
+      "confirm_with_token": "TOKEN-CJ-0009",
+      "confirm_on": "2026-05-12"
+    },
+    {
+      "person_key": "linchen",
+      "organization": "企业职业健康中心",
+      "local_id": "OCC-2026-0511",
+      "id_token": "TOKEN-LC-0003",
+      "name": "林晨",
+      "birth_date": "1998-02-20",
+      "gender": "女",
+      "phone": "137-0000-4096",
+      "established": "2026-09-08"
+    }
+  ],
+  "consents": [
+    {
+      "person_key": "wanglei",
+      "scope": "record:transfer",
+      "grantee": "clinician@市眼科医院",
+      "granted_on": "2026-04-08",
+      "purpose": "企业筛查转医院连续照护，需本人授权后调阅既往筛查与随访记录"
+    }
+  ],
+  "timelines": {
+    "wanglei": [
+      {"date": "2026-03-10", "event_type": "screening_questionnaire", "actor": "职业健康中心技师", "source": "企业职业健康中心",
+       "payload": {"osdi": 18, "symptom_duration_days": 10, "foreign_body_sensation": true, "dryness": true, "vision_fluctuation": true},
+       "note": "员工以为是普通疲劳，问卷提示症状已超出正常范围"},
+      {"date": "2026-03-10", "event_type": "work_environment", "actor": "职业健康中心技师", "source": "企业职业健康中心",
+       "payload": {"screen_hours": 9, "ac_direct_blast": true, "humidity_low": true, "screen_above_eye_level": false}},
+      {"date": "2026-03-10", "event_type": "blink_habits", "actor": "职业健康中心技师", "source": "企业职业健康中心",
+       "payload": {"reduced_blink_rate": true, "incomplete_blink": true, "contact_lens_wear": true, "contact_lens_discomfort": true}},
+      {"date": "2026-03-10", "event_type": "medication_change", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"self_medication": true, "vasoconstrictor_drops": false, "steroid_drops_without_prescription": false, "stopped_self_medication": false},
+       "note": "已自行购买网红“抗疲劳”眼药水滴用一周"},
+      {"date": "2026-03-10", "event_type": "lifestyle_advice", "actor": "企业驻场护士", "source": "企业职业健康中心",
+       "payload": {"detail": "20-20-20间歇休息、刻意完整眨眼、屏幕上缘低于视线、避开空调直吹、使用无防腐剂人工泪液"}},
+      {"date": "2026-03-10", "event_type": "follow_up", "actor": "企业驻场护士", "source": "企业职业健康中心",
+       "payload": {"result": "已预约2-4周后复查问卷与泪膜破裂时间"}},
+
+      {"date": "2026-04-02", "event_type": "patient_update", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"symptom_duration_days": 24, "foreign_body_sensation": true, "dryness": true, "redness_or_pain": false, "photophobia": false, "vision_fluctuation": true},
+       "note": "异物感持续，患者仍认为只是疲劳"},
+      {"date": "2026-04-02", "event_type": "medication_change", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"self_medication": true, "vasoconstrictor_drops": true, "steroid_drops_without_prescription": false, "stopped_self_medication": false},
+       "note": "自行换成去红血丝类缩血管眼药水，眼红暂时消退"},
+      {"date": "2026-04-02", "event_type": "referral", "actor": "企业驻场护士", "source": "企业职业健康中心",
+       "payload": {"to": "市眼科医院", "reason": "症状持续≥14天且自行使用缩血管眼药水，v1规则达到眼科就医级"},
+       "note": "系统按当时有效v1规则建议1周内转诊"},
+
+      {"date": "2026-04-08", "event_type": "tear_film_exam", "actor": "眼科技师", "source": "市眼科医院",
+       "payload": {"but_seconds": 4, "schirmer_mm": 6, "corneal_staining_grade": 0, "conjunctival_staining_grade": 1},
+       "note": "凭本人授权从企业档案连续转入，未重复建档"},
+      {"date": "2026-04-08", "event_type": "doctor_assessment", "actor": "眼科医生", "source": "市眼科医院",
+       "payload": {"doctor_inflammation": true, "doctor_corneal_risk": false},
+       "note": "诊断睑板腺功能障碍相关蒸发过强型干眼，暂未见角膜损伤"},
+      {"date": "2026-04-08", "event_type": "follow_up", "actor": "眼科医生", "source": "市眼科医院",
+       "payload": {"result": "处方无防腐剂人工泪液与睑缘清洁热敷，指导逐步停用缩血管眼药水，4周后复诊"}},
+
+      {"date": "2026-05-06", "event_type": "medication_change", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"self_medication": false, "vasoconstrictor_drops": false, "steroid_drops_without_prescription": false, "stopped_self_medication": true},
+       "note": "按医嘱停用全部自行购买的眼药水"},
+
+      {"date": "2026-08-20", "event_type": "tear_film_exam", "actor": "眼科技师", "source": "市眼科医院",
+       "payload": {"but_seconds": 9, "schirmer_mm": 9, "corneal_staining_grade": 0, "conjunctival_staining_grade": 0}},
+      {"date": "2026-08-20", "event_type": "doctor_assessment", "actor": "眼科医生", "source": "市眼科医院",
+       "payload": {"doctor_inflammation": false, "doctor_corneal_risk": false},
+       "note": "炎症控制，眼表恢复"},
+      {"date": "2026-08-20", "event_type": "screening_questionnaire", "actor": "眼科技师", "source": "市眼科医院",
+       "payload": {"osdi": 15, "symptom_duration_days": 7, "foreign_body_sensation": false, "dryness": true, "vision_fluctuation": false}},
+      {"date": "2026-08-20", "event_type": "follow_up", "actor": "眼科医生", "source": "市眼科医院",
+       "payload": {"result": "v1规则下降为复查级，继续生活干预，3个月后复查"}},
+
+      {"date": "2026-09-15", "event_type": "surgery_intention", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"planning_refractive_surgery": true},
+       "note": "患者拟做近视手术。事实与8月相同，但2026-09-01起v2规则生效，术前诉求升级为就医级；旧结论不变"},
+      {"date": "2026-09-15", "event_type": "referral", "actor": "企业驻场护士", "source": "企业职业健康中心",
+       "payload": {"to": "市眼科医院屈光门诊", "reason": "v2规则：近视手术计划须先完成眼科术前眼表评估"}},
+
+      {"date": "2026-09-22", "event_type": "medication_change", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"self_medication": true, "vasoconstrictor_drops": false, "steroid_drops_without_prescription": true, "stopped_self_medication": false},
+       "note": "眼红复发，网购“速效消炎”眼药水（含激素）自行滴用3天"},
+      {"date": "2026-09-22", "event_type": "patient_update", "actor": "患者本人（自报）", "source": "患者自报小程序",
+       "payload": {"symptom_duration_days": 14, "foreign_body_sensation": true, "dryness": true, "redness_or_pain": true, "photophobia": true, "vision_fluctuation": true},
+       "note": "出现眼痛、畏光、视力波动"},
+      {"date": "2026-09-22", "event_type": "tear_film_exam", "actor": "眼科技师", "source": "市眼科医院",
+       "payload": {"but_seconds": 3, "schirmer_mm": 2, "corneal_staining_grade": 2, "conjunctival_staining_grade": 2}},
+      {"date": "2026-09-22", "event_type": "doctor_assessment", "actor": "眼科医生", "source": "市眼科医院",
+       "payload": {"doctor_inflammation": true, "doctor_corneal_risk": true},
+       "note": "急诊评估：角膜上皮损伤合并炎症，自行使用激素眼药水已掩盖并加重病情"},
+      {"date": "2026-09-22", "event_type": "referral", "actor": "眼科医生", "source": "市眼科医院",
+       "payload": {"to": "眼科急诊", "reason": "角膜染色2级、Schirmer 2mm且自行使用激素眼药水，v2规则为紧急就医级"},
+       "note": "立即停止一切自行滴药"}
+    ],
+    "linchen": [
+      {"date": "2026-09-10", "event_type": "screening_questionnaire", "actor": "职业健康中心技师", "source": "企业职业健康中心",
+       "payload": {"osdi": 6, "symptom_duration_days": 2, "foreign_body_sensation": false, "dryness": false, "vision_fluctuation": false}},
+      {"date": "2026-09-10", "event_type": "work_environment", "actor": "职业健康中心技师", "source": "企业职业健康中心",
+       "payload": {"screen_hours": 4, "ac_direct_blast": false, "humidity_low": false, "screen_above_eye_level": false}},
+      {"date": "2026-09-10", "event_type": "blink_habits", "actor": "职业健康中心技师", "source": "企业职业健康中心",
+       "payload": {"reduced_blink_rate": false, "incomplete_blink": false, "contact_lens_wear": false, "contact_lens_discomfort": false}}
+    ]
+  },
+  "employer_cohort": {
+    "as_of": "2026-09-25",
+    "organization": "某企业（雇主视角）",
+    "level_counts": {"lifestyle": 10, "review": 7, "medical": 5, "urgent": 2}
+  }
+}

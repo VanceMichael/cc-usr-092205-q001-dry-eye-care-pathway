@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "干眼风险分层规则集（版本化）",
+  "type": "object",
+  "required": ["domain", "kind", "rule_sets"],
+  "properties": {
+    "domain": {"const": "dry-eye-care-pathway"},
+    "kind": {"const": "risk-rule-sets"},
+    "rule_sets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["version", "name", "effective_from", "levels", "rules", "actions"],
+        "properties": {
+          "version": {"type": "integer", "minimum": 1},
+          "name": {"type": "string", "minLength": 1},
+          "effective_from": {"type": "string", "format": "date"},
+          "effective_to": {"type": ["string", "null"], "format": "date"},
+          "changes_from_v1": {"type": "array", "items": {"type": "string"}},
+          "levels": {
+            "type": "array",
+            "items": {"enum": ["lifestyle", "review", "medical", "urgent"]},
+            "minItems": 4,
+            "uniqueItems": true
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "level"],
+              "properties": {
+                "id": {"type": "string"},
+                "name": {"type": "string"},
+                "level": {"enum": ["lifestyle", "review", "medical", "urgent"]},
+                "any": {"type": "array", "items": {"$ref": "#/$defs/clause"}},
+                "all": {"type": "array", "items": {"$ref": "#/$defs/clause"}}
+              }
+            }
+          },
+          "actions": {
+            "type": "object",
+            "required": ["lifestyle", "review", "medical", "urgent"],
+            "properties": {
+              "lifestyle": {"type": "array", "items": {"type": "string"}},
+              "review": {"type": "array", "items": {"type": "string"}},
+              "medical": {"type": "array", "items": {"type": "string"}},
+              "urgent": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "clause": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": ["key", "op", "value"],
+          "properties": {
+            "key": {"type": "string"},
+            "op": {"enum": ["==", "!=", ">", ">=", "<", "<="]},
+            "value": {},
+            "label": {"type": "string"}
+          }
+        },
+        {"required": ["any"], "properties": {"any": {"type": "array", "items": {"$ref": "#/$defs/clause"}}}},
+        {"required": ["all"], "properties": {"all": {"type": "array", "items": {"$ref": "#/$defs/clause"}}}}
+      ]
+    }
+  },
+  "additionalProperties": false
+}
